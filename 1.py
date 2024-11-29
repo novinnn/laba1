@@ -143,4 +143,34 @@ def load_from_json(filename="library.json"):
             books.append(book)
         return books
 
+def save_to_xml(digital_library, filename="library.xml"):
+    library = ET.Element("library")
+    for book in digital_library.books:
+        book_elem = ET.SubElement(library, "book")
+        ET.SubElement(book_elem, "title").text = book.title
+        ET.SubElement(book_elem, "author").text = book.author.name
+        ET.SubElement(book_elem, "price").text = str(book.price)
+        ET.SubElement(book_elem, "genre").text = book.genre.name
+        ET.SubElement(book_elem, "publication_date").text = book.publication_date.isoformat()
+    
+    tree = ET.ElementTree(library)
+    tree.write(filename)
+
+
+def load_from_xml(filename="library.xml"):
+    tree = ET.parse(filename)
+    root = tree.getroot()
+    books = []
+    for book_elem in root.findall("book"):
+        title = book_elem.find("title").text
+        author_name = book_elem.find("author").text
+        price = float(book_elem.find("price").text)
+        genre_name = book_elem.find("genre").text
+        publication_date = datetime.fromisoformat(book_elem.find("publication_date").text)
+        
+        author = Author(author_name, "")
+        genre = Genre(genre_name)
+        book = Book(title, author, price, genre, publication_date)
+        books.append(book)
+    return books
 
