@@ -1,0 +1,16 @@
+[
+    {
+        "title": "Book Title",
+        "author": "Author Name",
+        "price": 19.99,
+        "genre": "Genre Name",
+        "publication_date": "2024-11-30T00:00:00"
+    },
+    {
+        "title": "Another Book",
+        "author": "Another Author",
+        "price": 25.99,
+        "genre": "Genre Name",
+        "publication_date": "2023-05-15T00:00:00"
+    }
+]
