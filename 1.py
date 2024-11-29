@@ -113,4 +113,34 @@ class DigitalLibrary:
     
 #я случайно неправильно иниты написал
 
+def save_to_json(digital_library, filename="library.json"):
+    books_data = []
+    for book in digital_library.books:
+        books_data.append({
+            "title": book.title,
+            "author": book.author.name,
+            "price": book.price,
+            "genre": book.genre.name,
+            "publication_date": book.publication_date.isoformat()
+        })
+    with open(filename, 'w') as f:
+        json.dump(books_data, f, indent=4)
+
+def load_from_json(filename="library.json"):
+    with open(filename, 'r') as f:
+        books_data = json.load(f)
+        books = []
+        for book_data in books_data:
+            author = Author(book_data["author"], "")
+            genre = Genre(book_data["genre"])
+            book = Book(
+                title=book_data["title"],
+                author=author,
+                price=book_data["price"],
+                genre=genre,
+                publication_date=datetime.fromisoformat(book_data["publication_date"])
+            )
+            books.append(book)
+        return books
+
 
